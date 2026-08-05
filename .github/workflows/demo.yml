@@ -5,5 +5,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Hello Step
-        run: echo "Welcome to GitHub Actions"
-
+        run: |
+          echo "Welcome to GitHub Actions"
+          echo "Welcome to GitHub "
