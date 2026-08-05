@@ -1,5 +1,5 @@
 name: Multiple jobs
-on: workflow_dispatch
+on: push
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -7,16 +7,3 @@ jobs:
       - name: build step
         run: echo "this is build stage"
 
-  test:
-    runs-on: ubuntu-22.04
-    needs: build
-    steps:
-      - name: test step
-        run: echo "this is test step"
-
-  deploy:
-    runs-on: ubuntu-22.04
-    needs: test
-    steps:
-      - name: deploy step
-        run: echo "this is deploy step"
