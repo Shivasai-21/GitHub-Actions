@@ -1,9 +1,17 @@
 name: Multiple jobs
-on: push
+on: 
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+    
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - name: build step
         run: echo "this is build stage"
-
