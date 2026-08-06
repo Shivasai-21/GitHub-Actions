@@ -5,11 +5,9 @@ on:
       - main
       - develop
 
-
-    
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - name: build step
-        run: echo "this is ${{vars.My_Name}}"
+        run: echo "this is ${{secrets.My_Secret}}"
