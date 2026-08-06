@@ -1,17 +1,27 @@
-name: Environment variables demo
-on: workflow_dispatch
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-  S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+name: My-s3-static-website
+on: push
+
 jobs:
-  deploy:
+  deploy01:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: ap-south-1
+      S3_BUCKET: shivasai.devops.s3bucket
+      INCLUDE_FILE: index.html
+
     steps:
-      - name: env demo
+      - name: Checkout code from repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync files to S3 bucket
         run: |
-          echo "AWS Access Key ID: $AWS_ACCESS_KEY_ID"
-          echo "AWS Secret Access Key: $AWS_SECRET_ACCESS_KEY"
-          echo "AWS Default Region: $AWS_DEFAULT_REGION"
-          echo "S3 Bucket Name: $S3_BUCKET_NAME"  
+          aws s3 sync . s3://${{ env.S3_BUCKET }}/ \
+            --exclude "*" \
+            --include "${{ env.INCLUDE_FILE }}"
