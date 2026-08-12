@@ -1,6 +1,6 @@
 name: If with Functions   
 on: 
-  Push:
+  push:
     branches:
       - main
       - develop 
